@@ -1,10 +1,13 @@
 package ink.work.taboopublicwork.api
 
 import ink.work.taboopublicwork.TabooPublicWork
+import org.bukkit.entity.Player
 import taboolib.common.io.newFile
 import taboolib.common.io.newFolder
 import taboolib.common.platform.function.getDataFolder
 import taboolib.common.platform.function.releaseResourceFile
+import taboolib.common.util.replaceWithOrder
+import taboolib.module.chat.colored
 import taboolib.module.configuration.Configuration
 import taboolib.module.configuration.Type
 import taboolib.module.nms.MinecraftVersion
@@ -24,6 +27,11 @@ interface IModule {
     val id: String
 
     /**
+     *  模块开发者
+     */
+    val author: String
+
+    /**
      *  模块支持的最低版本
      *
      *  使用 MinecraftVersion
@@ -34,6 +42,8 @@ interface IModule {
     fun versionMax(): Int = 99
 
     var config: Configuration
+
+    var langFile: Configuration
 
     /**
      *  加载配置文件
@@ -82,9 +92,47 @@ interface IModule {
     fun initModule(action: IModule.() -> Unit = {}) {
         initConfig()
         if (isEnable()) {
+            // 释放语言文件
+            mergeLanguageFile()
             action.invoke(this)
         }
     }
 
+    /**
+     *  获取语言文件
+     */
+    fun getLanguage(): String {
+        return config.getString("setting.language", "zh_CN")!!
+    }
+
+    /**
+     *  释放语言文件
+     */
+    fun mergeLanguageFile() {
+        val targetFile = newFile(getDataFolder(), "moules/${id}/lang/${getLanguage()}.yml")
+        if (!targetFile.exists()) {
+            // 判断一下Jar里面有没有对应的语言文件 没有就使用玩家写的文件
+            val res = try {
+                releaseResourceFile("moules/${id}/lang/${getLanguage()}.yml", false)
+            } catch (e: Exception) {
+                newFile(getDataFolder(), "moules/${id}/lang/${getLanguage()}.yml", create = true)
+            }
+            langFile = Configuration.loadFromFile(res)
+            return
+        }
+        langFile = Configuration.loadFromFile(targetFile)
+    }
+
+    /**
+     *  发送语言
+     */
+    fun sendLang(player: Player, key: String, vararg args: Any) {
+        val message = langFile.getString(key, key)!!
+        player.sendMessage(message.replaceWithOrder(args).colored())
+    }
+
+    fun Player.sendLang(key: String, vararg args: Any) {
+        sendLang(this, key, *args)
+    }
 
 }
