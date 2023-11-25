@@ -1,4 +1,4 @@
-rootProject.name = "TabooPublicWrok"
+rootProject.name = "TabooPublicWork"
 
 include("plugin")
 include("project:core")
