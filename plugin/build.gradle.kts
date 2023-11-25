@@ -8,7 +8,7 @@ dependencies {
     // 打包子项目
     implementation(project(":project:core"))
     implementation(project(":project:runtime-bukkit"))
-    implementation(project(":project:module-warp"))
+    implementation(project(":module:module-warp"))
 }
 
 
