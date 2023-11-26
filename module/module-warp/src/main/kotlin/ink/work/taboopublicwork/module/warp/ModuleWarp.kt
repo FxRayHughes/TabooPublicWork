@@ -8,6 +8,7 @@ import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.function.info
 import taboolib.module.configuration.Configuration
+import java.io.File
 
 
 object ModuleWarp : IModule {
@@ -16,6 +17,7 @@ object ModuleWarp : IModule {
     override val name = "地标"
     override val id = "warp"
     override val author = "枫溪"
+    override val description = "地标模块"
     override lateinit var config: Configuration
     override lateinit var langFile: Configuration
 
@@ -40,5 +42,4 @@ object ModuleWarp : IModule {
             database.load()
         }
     }
-
 }

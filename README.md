@@ -1,70 +1,97 @@
-# taboolib-multi-module-sdk
-多模块 `TabooLib` 项目模板  
+# TabooPublicWork
 
-## 准备工作
+### 禁忌基建
 
-项目结构如下所示
+#### 项目介绍
 
-    MyHelloWorld
-    ├── plugin                     -- 插件打包模块，用于将子模块合并打包
-    │   └── build.gradle.kts
-    ├── project                    -- 项目目录
-    │   ├── core                   -- 核心模块，公开出去的代码
-    │   │   └── build.gradle.kts
-    │   └── runtime-bukkit         -- Bukkit 平台启动类，不要把你的业务逻辑写到这里面
-    │       └── build.gradle.kts
-    ├── build.gradle.kts           -- 全局构建文件
-    ├── gradle.properties          -- 全局配置
-    ├── settings.gradle.kts        -- 全局配置
-    ...
+这是一个基于TabooLib 开发的多模块的可拆卸的基础插件
 
-## 配置插件
+用于代替Ess CMI 等基础插件
 
-首先打开 `gradle.properties` 文件，编辑插件的基本信息和依赖文件版本：
+### 创建模块
 
-```properties
-# 这个改成你的
-group=me.skymc.helloworld
-version=1.0.0
-# 这个看情况改
-taboolib_version=6.0.10-86
+您可以使用fork 或者是 附属插件的形式进行拓展
+
+#### 第一步 创建一个模块主类
+
+需要继承 IModule
+
+替换下方代码字符串部分
+```kotlin
+
+object ModuleWarp : IModule {
+
+    // 标准 IModule 接口实现
+    override val name = "地标"
+    override val id = "warp"
+    override val author = "枫溪"
+    override val description = "地标模块"
+    override lateinit var config: Configuration
+    override lateinit var langFile: Configuration
+
+    @Awake(LifeCycle.ENABLE)
+    fun init() {
+        initModule {
+            info("Module - Warp 已启用")
+            // 模块加载时执行
+            // TODO
+        }
+
+        reloadModule {
+            // 模块重载时执行
+            // TODO
+        }
+    }
+
+}
+
+
+```
+需要统一模块的初始化和重载方法
+
+初始化说明
+
+首先会初始化出配置文件 然后判断内部的config (setting.enable = true)
+
+然后会对比服务器版本 是否符合需求
+```kotlin
+
+    /**
+     *  模块支持的最低版本
+     *
+     *  使用 MinecraftVersion
+     *
+     *  默认最低1.12.2 最高不限制
+     */
+    fun versionMin(): Int = MinecraftVersion.V1_12
+    fun versionMax(): Int = 99
+
 ```
 
-## 安装 TabooLib 模块
+然后才会进行释放语言文件 和 执行初始化代码
 
-你可以在 `build.gradle.kts` 文件中你可以添加或删除 **TabooLib** 模块，这和一般的项目可能不太一样。
+
+#### 第二步 创建一个模块配置类
+
+框架已经为您创建好配置管理 只需要在resources内创建配置文件yml即可
+
+路径位置为: resources/modules/模块id/config.yml
+
+当然你也可以自定义这个配置文件的路径 需要重写 IModule 的 configPath 字段
 
 ```kotlin
-dependencies {
-    ...
-    // 引入 Taboolib
-    compileOnly("io.izzel.taboolib:common:$taboolib_version")
-    implementation("io.izzel.taboolib:common-5:$taboolib_version")
-    implementation("io.izzel.taboolib:module-chat:$taboolib_version")
-    implementation("io.izzel.taboolib:module-configuration:$taboolib_version")
-    implementation("io.izzel.taboolib:platform-bukkit:$taboolib_version")
-    implementation("io.izzel.taboolib:expansion-command-helper:$taboolib_version")
-    // 如果你要加新的 TabooLib 模块，就写到下面
-    // implementation("io.izzel.taboolib:module-lang:$taboolib_version")
-}
+
+    override fun getFilePath(): File {
+        return super.getFilePath()
+    }
+
+    override fun getSubFilePath(): String {
+        return super.getSubFilePath()
+    }
+
 ```
 
-注意！只有需要打包到插件里的依赖才可以使用 `implementation`。
+#### 第三步 实现基础逻辑
 
-## 添加新的模块
+接下来就是自己实现基础逻辑了
 
-多模块是 Gradle 的基本操作，不用我教的吧。别忘记在 `plugin/build.gradle.kts` 文件里添加新的模块。
-
-```kotlin
-dependencies {
-    // 打包子项目
-    implementation(project(":project:core"))
-    implementation(project(":project:runtime-bukkit"))
-    // 添加新的模块就写到下面
-    // implementation(project(":project:module-abab"))
-}
-```
-
-## 总结
-
-插件该怎么写就在 `core` 里怎么写，`runtime-bukkit` 基本不需要改。

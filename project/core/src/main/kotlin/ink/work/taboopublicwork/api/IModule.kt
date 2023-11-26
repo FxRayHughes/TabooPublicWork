@@ -35,6 +35,12 @@ interface IModule {
     val author: String
 
     /**
+     *  模块描述
+     */
+    val description: String
+        get() = ""
+
+    /**
      *  模块支持的最低版本
      *
      *  使用 MinecraftVersion
