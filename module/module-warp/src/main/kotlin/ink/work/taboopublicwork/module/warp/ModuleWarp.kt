@@ -12,16 +12,14 @@ import taboolib.module.configuration.Configuration
 
 object ModuleWarp : IModule {
 
+    // 标准 IModule 接口实现
     override val name = "地标"
-
     override val id = "warp"
-
     override val author = "枫溪"
-
     override lateinit var config: Configuration
-
     override lateinit var langFile: Configuration
 
+    // Database接口载体
     lateinit var database: IWarpDatabase
 
     @Awake(LifeCycle.ENABLE)
@@ -30,8 +28,8 @@ object ModuleWarp : IModule {
             info("Module - Warp 已启用")
             val databaseType = config.getString("database.type", "yaml")!!
             database = when (databaseType) {
-                "yaml" -> WarpDatabaseYaml()
-                "sql" -> WarpDatabaseSql()
+                "yaml","YAML" -> WarpDatabaseYaml()
+                "sql","SQL" -> WarpDatabaseSql()
                 else -> WarpDatabaseYaml()
             }
             database.load()
