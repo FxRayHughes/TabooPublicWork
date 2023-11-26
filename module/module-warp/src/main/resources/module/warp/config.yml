@@ -3,3 +3,5 @@ setting:
   language: "zh_CN"
 database:
   type: "yaml"
+  public: true
+  table: "warp"

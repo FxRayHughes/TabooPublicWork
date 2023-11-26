@@ -7,6 +7,7 @@ val taboolib_version: String by project
 dependencies {
     // 打包子项目
     implementation(project(":project:core"))
+    implementation(project(":project:util-sql"))
     implementation(project(":project:runtime-bukkit"))
     implementation(project(":module:module-warp"))
 }

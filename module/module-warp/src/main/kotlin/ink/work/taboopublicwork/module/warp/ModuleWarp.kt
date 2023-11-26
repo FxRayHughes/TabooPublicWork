@@ -2,6 +2,7 @@ package ink.work.taboopublicwork.module.warp
 
 import ink.work.taboopublicwork.api.IModule
 import ink.work.taboopublicwork.module.warp.database.IWarpDatabase
+import ink.work.taboopublicwork.module.warp.database.WarpDatabaseSql
 import ink.work.taboopublicwork.module.warp.database.WarpDatabaseYaml
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
@@ -21,7 +22,7 @@ object ModuleWarp : IModule {
 
     override lateinit var langFile: Configuration
 
-    var database: IWarpDatabase = WarpDatabaseYaml
+    lateinit var database: IWarpDatabase
 
     @Awake(LifeCycle.ENABLE)
     fun init() {
@@ -29,10 +30,16 @@ object ModuleWarp : IModule {
             info("Module - Warp 已启用")
             val databaseType = config.getString("database.type", "yaml")!!
             database = when (databaseType) {
-                "yaml" -> WarpDatabaseYaml
-                else -> WarpDatabaseYaml
+                "yaml" -> WarpDatabaseYaml()
+                "sql" -> WarpDatabaseSql()
+                else -> WarpDatabaseYaml()
             }
+            database.load()
             info("Module - Warp 数据库类型: $databaseType")
+        }
+
+        reloadModule {
+            database.load()
         }
     }
 

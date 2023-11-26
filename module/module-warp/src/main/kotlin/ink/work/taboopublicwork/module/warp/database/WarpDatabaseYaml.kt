@@ -8,7 +8,7 @@ import taboolib.module.configuration.Configuration
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 
-object WarpDatabaseYaml : IWarpDatabase, IMultipleFiles {
+class WarpDatabaseYaml : IWarpDatabase, IMultipleFiles {
 
     private val data = ConcurrentHashMap<String, WarpData>()
 
@@ -40,6 +40,7 @@ object WarpDatabaseYaml : IWarpDatabase, IMultipleFiles {
         val configuration = Configuration.loadFromFile(newFile)
         configuration["name"] = warpData.name
         configuration["world"] = warpData.world.toString()
+        configuration["worldName"] = warpData.worldName
         configuration["x"] = warpData.x
         configuration["y"] = warpData.y
         configuration["z"] = warpData.z

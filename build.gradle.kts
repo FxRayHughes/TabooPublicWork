@@ -5,6 +5,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val taboolib_version: String by project
 
+val jimmer_version:String by project
+
 val kotlinVersionNum: String
     get() = project.kotlin.coreLibrariesVersion.replace(".", "")
 
@@ -43,6 +45,10 @@ subprojects {
         implementation("io.izzel.taboolib:module-lang:$taboolib_version")
         implementation("io.izzel.taboolib:module-nms:$taboolib_version")
         implementation("io.izzel.taboolib:module-nms-util:$taboolib_version")
+        implementation("io.izzel.taboolib:module-database:$taboolib_version")
+
+        compileOnly("com.google.code.gson:gson:2.10")
+
     }
 
 
@@ -54,6 +60,7 @@ subprojects {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
     }
@@ -74,6 +81,11 @@ subprojects {
         //     如果你要重定向就在下面加
         // =============================
         // relocate("org.spongepowered.math", "${rootProject.group}.library.math")
+    }
+    kotlin {
+        sourceSets.main {
+            kotlin.srcDir("build/generated/ksp/main/kotlin")
+        }
     }
 }
 

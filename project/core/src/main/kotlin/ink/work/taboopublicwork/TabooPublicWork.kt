@@ -1,8 +1,10 @@
 package ink.work.taboopublicwork
 
+import ink.work.taboopublicwork.api.IModule
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
 import taboolib.platform.BukkitPlugin
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * 这是你插件对外开放的主类
@@ -18,4 +20,25 @@ object TabooPublicWork {
     val bukkitPlugin by lazy {
         BukkitPlugin.getInstance()
     }
+
+    val modules = ConcurrentHashMap<String, IModule>()
+
+    val modulesReloadAction = ConcurrentHashMap<String, IModule.() -> Unit>()
+    fun reload() {
+        modulesReloadAction.forEach { (t, u) ->
+            val iModule = modules[t]
+            if (iModule != null) {
+                u.invoke(iModule)
+            }
+        }
+    }
+
+    fun reloadModule(id: String) {
+        val iModule = modules[id]
+        if (iModule != null) {
+            modulesReloadAction[id]?.invoke(iModule)
+        }
+    }
+
+
 }

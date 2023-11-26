@@ -1,13 +1,16 @@
 package ink.work.taboopublicwork.api
 
 import ink.work.taboopublicwork.TabooPublicWork
+import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import taboolib.common.io.newFile
 import taboolib.common.io.newFolder
+import taboolib.common.platform.function.adaptCommandSender
+import taboolib.common.platform.function.adaptPlayer
 import taboolib.common.platform.function.getDataFolder
 import taboolib.common.platform.function.releaseResourceFile
 import taboolib.common.util.replaceWithOrder
-import taboolib.module.chat.colored
+import taboolib.module.chat.component
 import taboolib.module.configuration.Configuration
 import taboolib.module.configuration.Type
 import taboolib.module.nms.MinecraftVersion
@@ -53,7 +56,7 @@ interface IModule {
      *  会从jar中释放 未找到会创建一个新的
      */
     fun initConfig() {
-        val path = "moules/${id}/config.yml"
+        val path = "${getSubFilePath()}/config.yml"
         val resource = TabooPublicWork.bukkitPlugin.getResource(path)
 
         if (resource == null) {
@@ -65,14 +68,21 @@ interface IModule {
             }
             return
         }
-        config = Configuration.loadFromFile(releaseResourceFile("moules/${id}/config.yml"), Type.YAML)
+        config = Configuration.loadFromFile(releaseResourceFile("module/${id}/config.yml"), Type.YAML)
     }
 
     /**
      *  获取模块目录
      */
     fun getFilePath(): File {
-        return newFolder("moules/${id}/")
+        return newFolder(TabooPublicWork.bukkitPlugin.dataFolder, getSubFilePath())
+    }
+
+    /**
+     *  获取子文件目录
+     */
+    fun getSubFilePath(): String {
+        return "module/${id}"
     }
 
     /**
@@ -95,6 +105,26 @@ interface IModule {
             // 释放语言文件
             mergeLanguageFile()
             action.invoke(this)
+
+            // 注册到全局
+            TabooPublicWork.modules[id] = this
+        }
+    }
+
+    /**
+     *  重载模块标准入口
+     *
+     *  会协助重载配置文件与语言文件
+     */
+    fun reloadModule(action: IModule.() -> Unit = {}) {
+        TabooPublicWork.modulesReloadAction[id] = {
+            // 重载配置文件与语言文件
+            initConfig()
+            config.reload()
+            mergeLanguageFile()
+            langFile.reload()
+            // 运行action
+            action.invoke(this)
         }
     }
 
@@ -109,13 +139,13 @@ interface IModule {
      *  释放语言文件
      */
     fun mergeLanguageFile() {
-        val targetFile = newFile(getDataFolder(), "moules/${id}/lang/${getLanguage()}.yml")
+        val targetFile = File(getFilePath(), "lang/${getLanguage()}.yml")
         if (!targetFile.exists()) {
             // 判断一下Jar里面有没有对应的语言文件 没有就使用玩家写的文件
             val res = try {
-                releaseResourceFile("moules/${id}/lang/${getLanguage()}.yml", false)
+                releaseResourceFile("${getSubFilePath()}/lang/${getLanguage()}.yml", false)
             } catch (e: Exception) {
-                newFile(getDataFolder(), "moules/${id}/lang/${getLanguage()}.yml", create = true)
+                newFile(getFilePath(), "lang/${getLanguage()}.yml", create = true)
             }
             langFile = Configuration.loadFromFile(res)
             return
@@ -126,13 +156,13 @@ interface IModule {
     /**
      *  发送语言
      */
-    fun sendLang(player: Player, key: String, vararg args: Any) {
+    fun sendLangW(player: CommandSender, key: String, vararg args: Any) {
         val message = langFile.getString(key, key)!!
-        player.sendMessage(message.replaceWithOrder(args).colored())
+        message.replaceWithOrder(*args).component().buildColored().sendTo(adaptCommandSender(player))
     }
 
-    fun Player.sendLang(key: String, vararg args: Any) {
-        sendLang(this, key, *args)
+    fun CommandSender.sendLang(key: String, vararg args: Any) {
+        sendLangW(this, key, *args)
     }
 
 }
