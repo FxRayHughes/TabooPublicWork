@@ -2,6 +2,7 @@ package ink.work.taboopublicwork.command
 
 import ink.work.taboopublicwork.TabooPublicWork
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import taboolib.common.platform.command.CommandBody
 import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.mainCommand
