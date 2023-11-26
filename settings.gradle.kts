@@ -7,3 +7,4 @@ include("project:runtime-bukkit")
 include("project:util-sql")
 
 include("module:module-warp")
+include("module:module-yesod")

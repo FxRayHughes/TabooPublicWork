@@ -2,11 +2,9 @@ package ink.work.taboopublicwork.api
 
 import ink.work.taboopublicwork.TabooPublicWork
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
 import taboolib.common.io.newFile
 import taboolib.common.io.newFolder
 import taboolib.common.platform.function.adaptCommandSender
-import taboolib.common.platform.function.adaptPlayer
 import taboolib.common.platform.function.getDataFolder
 import taboolib.common.platform.function.releaseResourceFile
 import taboolib.common.util.replaceWithOrder
@@ -97,7 +95,14 @@ interface IModule {
      *  规范: setting.enable
      */
     fun isEnable(): Boolean {
-        return MinecraftVersion.isIn(versionMin(), versionMax()) && config.getBoolean("setting.enable")
+        return TabooPublicWork.modulesEnable[id] ?: false
+    }
+
+    /**
+     *  检查是否启用
+     */
+    fun checkEnable() {
+        TabooPublicWork.modulesEnable[id] = MinecraftVersion.isIn(versionMin(), versionMax()) && config.getBoolean("setting.enable")
     }
 
     /**
@@ -107,14 +112,15 @@ interface IModule {
      */
     fun initModule(action: IModule.() -> Unit = {}) {
         initConfig()
+        checkEnable()
         if (isEnable()) {
             // 释放语言文件
             mergeLanguageFile()
             action.invoke(this)
-
-            // 注册到全局
-            TabooPublicWork.modules[id] = this
         }
+        // 注册到全局
+        TabooPublicWork.modules[id] = this
+        TabooPublicWork.modulesInitAction[id] = action
     }
 
     /**
@@ -129,6 +135,13 @@ interface IModule {
             config.reload()
             mergeLanguageFile()
             langFile.reload()
+            val old = isEnable()
+            checkEnable()
+            if (isEnable() != old && isEnable()) {
+                // 重新启用
+                TabooPublicWork.modulesInitAction[id]?.invoke(this)
+            }
+
             // 运行action
             action.invoke(this)
         }

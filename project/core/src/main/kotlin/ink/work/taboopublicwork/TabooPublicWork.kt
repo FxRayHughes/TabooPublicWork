@@ -24,6 +24,9 @@ object TabooPublicWork {
     val modules = ConcurrentHashMap<String, IModule>()
 
     val modulesReloadAction = ConcurrentHashMap<String, IModule.() -> Unit>()
+    val modulesInitAction = ConcurrentHashMap<String, IModule.() -> Unit>()
+
+    val modulesEnable = ConcurrentHashMap<String, Boolean>()
     fun reload() {
         modulesReloadAction.forEach { (t, u) ->
             val iModule = modules[t]

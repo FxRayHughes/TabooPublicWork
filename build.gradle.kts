@@ -27,6 +27,9 @@ subprojects {
             url = uri("http://ptms.ink:8081/repository/releases/")
             isAllowInsecureProtocol = true
         }
+        maven {
+            url = uri("https://libraries.minecraft.net")
+        }
     }
 
     dependencies {
@@ -48,6 +51,7 @@ subprojects {
         implementation("io.izzel.taboolib:module-database:$taboolib_version")
 
         compileOnly("com.google.code.gson:gson:2.10")
+        compileOnly("com.mojang:brigadier:1.0.18")
 
     }
 

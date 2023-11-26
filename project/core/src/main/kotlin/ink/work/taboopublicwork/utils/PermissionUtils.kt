@@ -9,7 +9,7 @@ import org.bukkit.entity.Player
  *  比如 home.max.* 会直接认为是 maxSize
  *  比如 home.max.[数字] 则会进行判断 看玩家最大的值是多少
  *
- *  @param permission 权限节点 home.
+ *  @param permission 权限节点 home
  */
 fun Player.getPermissionNumber(permission: String, maxSize: Int = 20): Int {
     var number = 0
@@ -17,5 +17,5 @@ fun Player.getPermissionNumber(permission: String, maxSize: Int = 20): Int {
         return maxSize
     }
     val group = Bukkit.getServer().pluginManager.getPermission(permission) ?: return 0
-    return group.children.keys.maxOf { it.toIntOrNull() ?: 0 }
+    return group.children.asSequence().filter { it.value }.maxOf { it.key.toIntOrNull() ?: 0 }
 }

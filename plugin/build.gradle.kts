@@ -10,6 +10,7 @@ dependencies {
     implementation(project(":project:util-sql"))
     implementation(project(":project:runtime-bukkit"))
     implementation(project(":module:module-warp"))
+    implementation(project(":module:module-yesod"))
 }
 
 
