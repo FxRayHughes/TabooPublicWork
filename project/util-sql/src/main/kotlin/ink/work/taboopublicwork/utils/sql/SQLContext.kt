@@ -24,11 +24,11 @@ interface SQLContext {
      */
     fun initDataSource(module: IModule) {
         // 首先判断子文件是否写入了数据源
-        var host = TabooPublicWork.conf.getString("database.host", "localhost")
-        var port = TabooPublicWork.conf.getString("database.port", "3306")
-        var user = TabooPublicWork.conf.getString("database.user", "root")
-        var password = TabooPublicWork.conf.getString("database.password", "root")
-        var database = TabooPublicWork.conf.getString("database.database", "minecraft")
+        var host = TabooPublicWork.config.getString("database.host", "localhost")
+        var port = TabooPublicWork.config.getString("database.port", "3306")
+        var user = TabooPublicWork.config.getString("database.user", "root")
+        var password = TabooPublicWork.config.getString("database.password", "root")
+        var database = TabooPublicWork.config.getString("database.database", "minecraft")
         // 判断私有源
         if (!module.config.getBoolean("database.public", true)) {
             module.config.getString("database.host", "Inheritance")?.let {

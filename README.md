@@ -108,3 +108,48 @@ override fun getSubFilePath(): String {
 
 接下来就是自己实现基础逻辑了
 
+### 一些工具
+
+#### 玩家持久化数据管理
+
+首先导入模块
+```kts
+compileOnly(project(":project:util-player-data"))
+```
+
+用法如下
+
+```kotlin
+fun OfflinePlayer.getDataString(key: String): String? {
+    return PlayerDatabase.database.get(this, key)
+}
+
+fun OfflinePlayer.getDataString(key: String, default: String): String {
+    return PlayerDatabase.database.get(this, key) ?: default
+}
+
+fun OfflinePlayer.setDataString(key: String, value: String?) {
+    PlayerDatabase.database.set(this, key, value)
+}
+
+fun OfflinePlayer.getDataKeys(): Set<String> {
+    return PlayerDatabase.database.keys(this)
+}
+
+fun OfflinePlayer.removeDataString(key: String) {
+    PlayerDatabase.database.remove(this, key)
+}
+
+fun OfflinePlayer.loadData() {
+    PlayerDatabase.database.load(this)
+}
+
+fun OfflinePlayer.saveData() {
+    PlayerDatabase.database.save(this)
+}
+
+fun OfflinePlayer.hasDataString(key: String): Boolean {
+    return PlayerDatabase.database.get(this, key) != null
+}
+
+```

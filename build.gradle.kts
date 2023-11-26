@@ -44,6 +44,7 @@ subprojects {
         implementation("io.izzel.taboolib:module-configuration:$taboolib_version")
         implementation("io.izzel.taboolib:platform-bukkit:$taboolib_version")
         implementation("io.izzel.taboolib:expansion-command-helper:$taboolib_version")
+        implementation("io.izzel.taboolib:expansion-player-database:$taboolib_version")
 
         implementation("io.izzel.taboolib:module-lang:$taboolib_version")
         implementation("io.izzel.taboolib:module-nms:$taboolib_version")

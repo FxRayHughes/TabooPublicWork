@@ -4,3 +4,8 @@ database:
   user: "root"
   password: "root"
   database: "minecraft"
+playerdata:
+  table: "player_data_table"
+  # 可选 YAML / SQL
+  # 如果选择SQL 会使用上面的表名和连接
+  type: "YAML"

@@ -1,0 +1,14 @@
+setting:
+  # 是否启用模块
+  enable: false
+  language: "zh_CN"
+kits:
+  新人礼包:
+    # 下次领取时间 毫秒 -1为单次
+    delay: 6000
+    items:
+      - "MM: 测试物品 1-2"
+      - "MC: APPLE 2"
+      - "SI: 测试SX-Item物品 2-4"
+    script: -|
+      tell papi "%player_name% 领取了新手礼包"

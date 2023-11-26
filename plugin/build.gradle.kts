@@ -11,6 +11,7 @@ dependencies {
     implementation(project(":project:runtime-bukkit"))
     implementation(project(":module:module-warp"))
     implementation(project(":module:module-yesod"))
+    implementation(project(":module:module-kits"))
 }
 
 
