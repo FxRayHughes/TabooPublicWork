@@ -8,6 +8,17 @@
 
 用于代替Ess CMI 等基础插件
 
+### 功能列表
+
+| 功能名称          | 功能ID    | 是否完成 |
+|---------------|---------|------|
+| 地标功能          | warp    | ✔️   |
+| 额外限制          | yesod   | ✔️   |
+| 礼包功能          | kit     | ❌    |
+| 更好的刷怪笼(原版和MM) | spawner | ❌    |
+| 传送功能          | tpa     | ❌    |
+| 货币兼容(可跨服)     | eco     | ❌    |
+
 ### 创建模块
 
 您可以使用fork 或者是 附属插件的形式进行拓展
@@ -17,6 +28,7 @@
 需要继承 IModule
 
 替换下方代码字符串部分
+
 ```kotlin
 
 object ModuleWarp : IModule {
@@ -47,6 +59,7 @@ object ModuleWarp : IModule {
 
 
 ```
+
 需要统一模块的初始化和重载方法
 
 初始化说明
@@ -54,22 +67,22 @@ object ModuleWarp : IModule {
 首先会初始化出配置文件 然后判断内部的config (setting.enable = true)
 
 然后会对比服务器版本 是否符合需求
+
 ```kotlin
 
-    /**
-     *  模块支持的最低版本
-     *
-     *  使用 MinecraftVersion
-     *
-     *  默认最低1.12.2 最高不限制
-     */
-    fun versionMin(): Int = MinecraftVersion.V1_12
-    fun versionMax(): Int = 99
+/**
+ *  模块支持的最低版本
+ *
+ *  使用 MinecraftVersion
+ *
+ *  默认最低1.12.2 最高不限制
+ */
+fun versionMin(): Int = MinecraftVersion.V1_12
+fun versionMax(): Int = 99
 
 ```
 
 然后才会进行释放语言文件 和 执行初始化代码
-
 
 #### 第二步 创建一个模块配置类
 
@@ -81,13 +94,13 @@ object ModuleWarp : IModule {
 
 ```kotlin
 
-    override fun getFilePath(): File {
-        return super.getFilePath()
-    }
+override fun getFilePath(): File {
+    return super.getFilePath()
+}
 
-    override fun getSubFilePath(): String {
-        return super.getSubFilePath()
-    }
+override fun getSubFilePath(): String {
+    return super.getSubFilePath()
+}
 
 ```
 
