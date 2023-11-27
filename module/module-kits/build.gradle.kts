@@ -5,4 +5,5 @@ dependencies {
 
     compileOnly(project(":project:core"))
     compileOnly(project(":project:util-player-data"))
+    compileOnly(project(":project:util-item-lib"))
 }

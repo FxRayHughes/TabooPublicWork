@@ -2,6 +2,7 @@ package ink.work.taboopublicwork.api
 
 import ink.work.taboopublicwork.TabooPublicWork
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import taboolib.common.io.newFile
 import taboolib.common.io.newFolder
 import taboolib.common.platform.function.adaptCommandSender
@@ -12,6 +13,7 @@ import taboolib.module.chat.component
 import taboolib.module.configuration.Configuration
 import taboolib.module.configuration.Type
 import taboolib.module.nms.MinecraftVersion
+import taboolib.platform.compat.replacePlaceholder
 import java.io.File
 
 interface IModule {
@@ -177,6 +179,13 @@ interface IModule {
      */
     fun sendLangW(player: CommandSender, key: String, vararg args: Any) {
         val message = langFile.getString(key, key)!!
+        if (message.isEmpty()) {
+            return
+        }
+        if (player is Player) {
+            message.replacePlaceholder(player).replaceWithOrder(*args).component().buildColored().sendTo(adaptCommandSender(player))
+            return
+        }
         message.replaceWithOrder(*args).component().buildColored().sendTo(adaptCommandSender(player))
     }
 

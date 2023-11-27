@@ -6,9 +6,14 @@ kits:
   新人礼包:
     # 下次领取时间 毫秒 -1为单次
     delay: 6000
+    # 物品写法 https://github.com/FxRayHughes/TabooPublicWork#%E7%89%A9%E5%93%81%E7%AE%A1%E7%90%86
     items:
-      - "MM: 测试物品 1-2"
-      - "MC: APPLE 2"
-      - "SI: 测试SX-Item物品 2-4"
+      - "[MythicItem] 测试物品 1-2"
+      - "[Minecraft] APPLE 2"
+      - "[SxItem] 测试SX-Item物品 2-4"
+    # 脚本为Kether脚本
     script: -|
       tell papi "%player_name% 领取了新手礼包"
+    # 领取限制
+    limit: -|
+      check papi "%player_name%" == "Ray_Hughes"

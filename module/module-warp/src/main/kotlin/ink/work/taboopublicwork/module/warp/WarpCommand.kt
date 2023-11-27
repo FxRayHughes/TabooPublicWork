@@ -32,6 +32,7 @@ object WarpCommand {
                 sender.sendLang("module-warp-warp-success", name)
             }
         }
+        createHelper()
     }
 
 

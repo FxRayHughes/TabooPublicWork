@@ -1,1 +1,3 @@
-module-warp-create-success: "§8\\[§a TPW §8\\]§7 地标创建成功&f {0}"
+module-kits-delay: "§8\\[§a TPW §8\\]§7 你还需要等待 {0} 秒才能领取下一次{1}礼包"
+module-kits-not-found: "§8\\[§a TPW §8\\]§7 没有找到{0}礼包"
+module-kits-reload: "§8\\[§a TPW §8\\]§7 重载成功"
