@@ -137,12 +137,13 @@ interface IModule {
             config.reload()
             mergeLanguageFile()
             langFile.reload()
-            val old = isEnable()
-            checkEnable()
-            if (isEnable() != old && isEnable()) {
-                // 重新启用
-                TabooPublicWork.modulesInitAction[id]?.invoke(this)
-            }
+            // 不允许热重载启动模块
+//            val old = isEnable()
+//            checkEnable()
+//            if (isEnable() != old && isEnable()) {
+//                // 重新启用
+//                TabooPublicWork.modulesInitAction[id]?.invoke(this)
+//            }
 
             // 运行action
             action.invoke(this)

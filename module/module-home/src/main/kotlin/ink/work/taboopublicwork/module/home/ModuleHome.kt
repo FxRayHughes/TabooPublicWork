@@ -1,6 +1,7 @@
 package ink.work.taboopublicwork.module.home
 
 import ink.work.taboopublicwork.api.IModule
+import ink.work.taboopublicwork.module.home.internal.command.OtherCommand
 import taboolib.common.LifeCycle
 import taboolib.common.platform.Awake
 import taboolib.common.platform.function.info
@@ -17,6 +18,7 @@ object ModuleHome : IModule {
     fun init() {
         initModule {
             info("Module - Home 已启用")
+            OtherCommand.registerCommand()
         }
 
         reloadModule {
