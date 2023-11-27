@@ -30,6 +30,9 @@ subprojects {
         maven {
             url = uri("https://libraries.minecraft.net")
         }
+        maven {
+            url = uri("https://jitpack.io")
+        }
     }
 
     dependencies {
@@ -53,6 +56,8 @@ subprojects {
 
         compileOnly("com.google.code.gson:gson:2.10")
         compileOnly("com.mojang:brigadier:1.0.18")
+
+        implementation("ink.ptms:um:1.0.0-beta-34")
 
     }
 
@@ -86,6 +91,7 @@ subprojects {
         //     如果你要重定向就在下面加
         // =============================
         // relocate("org.spongepowered.math", "${rootProject.group}.library.math")
+        relocate("ink.ptms.um","ink.work.taboopublicwork.lib.um")
     }
     kotlin {
         sourceSets.main {

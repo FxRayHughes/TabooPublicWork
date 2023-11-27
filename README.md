@@ -113,6 +113,7 @@ override fun getSubFilePath(): String {
 #### 玩家持久化数据管理
 
 首先导入模块
+
 ```kts
 compileOnly(project(":project:util-player-data"))
 ```
@@ -153,3 +154,55 @@ fun OfflinePlayer.hasDataString(key: String): Boolean {
 }
 
 ```
+
+#### 物品管理
+
+本插件不携带物品库但是兼容别的插件的物品库
+
+兼容列表与快捷名称
+排名根据首字母大小写决定
+
+| 物品源插件名          | 源名         | 优先级 |
+|-----------------|------------|-----|
+| EasyItem        | EasyItem   | 5   |
+| ItemsAdder      | ItemsAdder | 1   |
+| ItemSystem      | ItemSystem | 2   |
+| Minecraft       | Minecraft  | 6   |
+| MMOItems        | MMOItem    | 1   |
+| MythicMobs      | MythicItem | 4   |
+| NeigeItems      | NeigeItem  | 2   |
+| OriginAttribute | OriginItem | 1   |
+| SX-Item         | SxItem     | 0   |
+| Zaphkiel        | Zaphkiel   | 0   |
+
+注: 插件中使用的是 "源名"
+
+关于优先级:
+开发者根据插件ID索引的复杂度进行排序 优先级越小越先索引
+
+```kts
+compileOnly(project(":project:util-item-lib"))
+```
+
+统一入口 ``ItemLib``
+
+特殊说明: toString方法
+
+这是转为了一个标准格式:
+> [物品源] 物品ID 物品数量
+
+例如:
+
+1. [SxItem] 测试物品 1
+2. [MythicItem] MM的物品 1-2
+
+数量支持 1~2 1-2 这种写法 如果是可以携带参数的比如
+
++ SxItem
++ OA
++ NI
+
+可以在物品名后面加入参数
+例如:
+
+> [SxItem] 测试物品:参数1:参数2 1-2
