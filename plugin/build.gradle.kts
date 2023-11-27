@@ -14,6 +14,7 @@ dependencies {
     implementation(project(":module:module-warp"))
     implementation(project(":module:module-yesod"))
     implementation(project(":module:module-kits"))
+    implementation(project(":module:module-home"))
 }
 
 
