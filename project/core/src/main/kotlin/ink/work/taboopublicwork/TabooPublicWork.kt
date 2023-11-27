@@ -1,9 +1,6 @@
 package ink.work.taboopublicwork
 
 import ink.work.taboopublicwork.api.IModule
-import taboolib.common.LifeCycle
-import taboolib.common.platform.Awake
-import taboolib.expansion.setupPlayerDatabase
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
 import taboolib.platform.BukkitPlugin
@@ -29,13 +26,6 @@ object TabooPublicWork {
     val modulesInitAction = ConcurrentHashMap<String, IModule.() -> Unit>()
 
     val modulesEnable = ConcurrentHashMap<String, Boolean>()
-
-    @Awake(LifeCycle.ACTIVE)
-    fun init() {
-        // 创建 PlayerDatabase
-        val table = config.getString("database.player_data_table", "player_data_table")!!
-        setupPlayerDatabase(config.getConfigurationSection("database")!!, table)
-    }
 
     fun reload() {
         modulesReloadAction.forEach { (t, u) ->
