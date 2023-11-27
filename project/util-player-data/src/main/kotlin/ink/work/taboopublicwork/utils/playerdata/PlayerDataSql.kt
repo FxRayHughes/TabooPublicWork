@@ -1,12 +1,17 @@
 package ink.work.taboopublicwork.utils.playerdata
 
+import ink.work.taboopublicwork.TabooPublicWork
 import org.bukkit.OfflinePlayer
-import taboolib.expansion.DataContainer
-import taboolib.expansion.getPlayerDataContainer
-import taboolib.expansion.releasePlayerDataContainer
-import taboolib.expansion.setupPlayerDataContainer
+import taboolib.expansion.*
 
 class PlayerDataSql : IPlayerData {
+
+    init {
+        val config = TabooPublicWork.config
+        val table = config.getString("database.player_data_table", "player_data_table")!!
+        setupPlayerDatabase(config.getConfigurationSection("database")!!, table)
+    }
+
     override fun get(player: OfflinePlayer, key: String): String? {
         return player.uniqueId.getPlayerDataContainer()[key]
     }

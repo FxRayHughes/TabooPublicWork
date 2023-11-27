@@ -6,10 +6,13 @@ import org.bukkit.entity.Player
 import taboolib.common.platform.command.CommandBody
 import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.mainCommand
+import taboolib.common.platform.command.simpleCommand
 import taboolib.expansion.createHelper
+import taboolib.module.lang.sendLang
 
 @CommandHeader(name = "kits", aliases = ["kit"], permission = "taboopublicwork.command.kits")
 object KitCommand {
+
 
     @CommandBody
     val main = mainCommand {
