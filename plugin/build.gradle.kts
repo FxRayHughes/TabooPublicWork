@@ -8,6 +8,8 @@ dependencies {
     // 打包子项目
     implementation(project(":project:core"))
     implementation(project(":project:util-sql"))
+    implementation(project(":project:util-player-data"))
+    implementation(project(":project:util-item-lib"))
     implementation(project(":project:runtime-bukkit"))
     implementation(project(":module:module-warp"))
     implementation(project(":module:module-yesod"))

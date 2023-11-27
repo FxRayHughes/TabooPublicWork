@@ -12,7 +12,7 @@ val kotlinVersionNum: String
 
 plugins {
     java
-    id("org.jetbrains.kotlin.jvm") version "1.5.31"
+    id("org.jetbrains.kotlin.jvm") version "1.9.21"
     id("com.github.johnrengelman.shadow") version "7.1.2" apply false
 }
 
@@ -53,6 +53,7 @@ subprojects {
         implementation("io.izzel.taboolib:module-nms:$taboolib_version")
         implementation("io.izzel.taboolib:module-nms-util:$taboolib_version")
         implementation("io.izzel.taboolib:module-database:$taboolib_version")
+        implementation("io.izzel.taboolib:module-kether:$taboolib_version")
 
         compileOnly("com.google.code.gson:gson:2.10")
         compileOnly("com.mojang:brigadier:1.0.18")

@@ -43,6 +43,10 @@ object PlayerDatabase : IModule {
         database.load(event.player)
     }
 
+    override fun checkEnable() {
+        TabooPublicWork.modulesEnable[id] = true
+    }
+
     override fun isEnable(): Boolean {
         return true
     }
