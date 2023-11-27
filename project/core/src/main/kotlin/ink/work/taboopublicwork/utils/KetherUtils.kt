@@ -5,17 +5,18 @@ import taboolib.common.platform.function.console
 import taboolib.common5.Coerce
 import taboolib.module.kether.KetherShell
 import taboolib.module.kether.ScriptOptions
+import java.util.concurrent.CompletableFuture
 
-fun List<String>.evalKether(player: Player?, vars: Map<String, Any> = mapOf()) {
-    KetherShell.eval(this, ScriptOptions.builder().apply {
+fun List<String>.evalKether(player: Player?, vars: Map<String, Any> = mapOf()): CompletableFuture<Any?> {
+    return KetherShell.eval(this, ScriptOptions.builder().apply {
         namespace(listOf("adyeshach", "adyeshach-inner", "chemdah", "taboo-public-work"))
         sender(player ?: console())
         vars(vars)
     }.build())
 }
 
-fun String.evalKether(player: Player?, vars: Map<String, Any> = mapOf()) {
-    KetherShell.eval(this, ScriptOptions.builder().apply {
+fun String.evalKether(player: Player?, vars: Map<String, Any> = mapOf()): CompletableFuture<Any?> {
+    return KetherShell.eval(this, ScriptOptions.builder().apply {
         namespace(listOf("adyeshach", "adyeshach-inner", "chemdah", "taboo-public-work"))
         sender(player ?: console())
         vars(vars)
