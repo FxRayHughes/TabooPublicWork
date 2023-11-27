@@ -2,7 +2,6 @@ package ink.work.taboopublicwork.module.tpa.command
 
 import ink.work.taboopublicwork.module.tpa.ModuleTpa
 import ink.work.taboopublicwork.module.tpa.ModuleTpa.sendLang
-import ink.work.taboopublicwork.module.tpa.TpaPlayerData
 import ink.work.taboopublicwork.module.tpa.TpaPlayerData.askTimeout
 import ink.work.taboopublicwork.module.tpa.TpaPlayerData.getAsked
 import ink.work.taboopublicwork.module.tpa.TpaPlayerData.isTimeout

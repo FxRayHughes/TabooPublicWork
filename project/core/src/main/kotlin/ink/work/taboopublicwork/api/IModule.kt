@@ -50,9 +50,9 @@ interface IModule {
     fun versionMin(): Int = MinecraftVersion.V1_12
     fun versionMax(): Int = 99
 
-    var config: Configuration
+    abstract var config: Configuration
 
-    var langFile: Configuration
+    abstract var langFile: Configuration
 
     /**
      *  加载配置文件
@@ -179,7 +179,10 @@ interface IModule {
      *  发送语言
      */
     fun sendLangW(player: CommandSender, key: String, vararg args: Any) {
-        val message = langFile.getString(key, key)!!
+        val message = runCatching { langFile.getString(key, key)!! }.getOrNull() ?: return run {
+            mergeLanguageFile()
+            sendLangW(player, key, *args)
+        }
         if (message.isEmpty()) {
             return
         }
