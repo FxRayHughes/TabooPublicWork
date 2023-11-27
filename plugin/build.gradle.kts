@@ -16,6 +16,7 @@ dependencies {
     implementation(project(":module:module-kits"))
     implementation(project(":module:module-home"))
     implementation(project(":module:module-spawner"))
+    implementation(project(":module:module-tpa"))
 }
 
 

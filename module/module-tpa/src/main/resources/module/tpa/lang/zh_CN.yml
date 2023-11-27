@@ -1,0 +1,17 @@
+# 若不想发送指定消息可参考下方修改
+# module-tpa-ask-none: ""
+
+module-tpa-ask-none: "§8\\[§a TPW §8\\]§7 没有收到任何TP请求"
+module-tpa-ask-timeout: "§8\\[§a TPW §8\\]§7 {0} 的TP请求已超时"
+module-tpa-ask-timeout-any: "§8\\[§a TPW §8\\]§7 所有TP请求已超时"
+module-tpa-ask-too-fast: "§8\\[§c TPW §8\\]§7 请求过快, 玩家 {0} 的请求未超时"
+module-tpa-target-not-online: "§8\\[§c TPW §8\\]§7 玩家 {0} 不在线"
+
+module-tpa-target-get: "[](br)§8\\[§a TPW §8\\]§f 收到 {0} 的TP请求, 请求将在 {1} 秒后超时[](br)  [§8\\[§b§n点击接受请求§8\\]](cmd=/tpyes {0}) [](br)[](br)  [§8\\[§c§n点击拒绝请求§8\\]](cmd=/tpno {0}) [](br)"
+module-tpa-ask-sent: "§8\\[§a TPW §8\\]§f 已发送请求给玩家 {0}§f, 请求将在 {1} 秒后超时"
+
+module-tpa-accept-target: "§8\\[§a TPW §8\\]§7 已接受 {0} 的请求, 正在传送到此处"
+module-tpa-accept-player: "§8\\[§a TPW §8\\]§7 玩家 {0} 已接受请求, 正在传送至 {0}"
+
+module-tpa-deny-target: "§8\\[§c TPW §8\\]§7 已拒绝 {0} 的请求"
+module-tpa-deny-player: "§8\\[§c TPW §8\\]§7 玩家 {0} 已拒绝请求"
