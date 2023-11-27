@@ -10,10 +10,10 @@ import taboolib.module.configuration.Configuration
 object ModuleSpanwer : IModule {
 
     // 标准 IModule 接口实现
-    override val name = "地标"
+    override val name = "刷怪笼"
     override val id = "spawner"
-    override val author = "枫溪"
-    override val description = "地标模块"
+    override val author = "枫溪 & 坏黑"
+    override val description = "自定义刷怪笼 刷MM 或 MC的实体 部分代码来自 https://github.com/Bkm016/Sandalphon"
     override lateinit var config: Configuration
     override lateinit var langFile: Configuration
 
@@ -21,7 +21,7 @@ object ModuleSpanwer : IModule {
     @Awake(LifeCycle.ENABLE)
     fun init() {
         initModule {
-            info("Module - Warp 已启用")
+            info("Module - Spawner 已启用")
 
         }
 

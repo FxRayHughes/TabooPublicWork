@@ -65,7 +65,7 @@ object MainCommand {
                     sender.sendMessage("§7[§fTabooPublicWork§7] §f模块不存在: §7$module")
                     return@execute
                 }
-                TabooPublicWork.modules[module]?.reloadModule()
+                TabooPublicWork.reloadModule(module)
                 sender.sendMessage("§7[§fTabooPublicWork§7] §f模块重载成功: §7$module")
             }
         }

@@ -1,5 +1,6 @@
 package ink.work.taboopublicwork.module.kits
 
+import ink.work.taboopublicwork.TabooPublicWork
 import ink.work.taboopublicwork.module.kits.ModuleKits.sendLang
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -35,7 +36,7 @@ object KitCommand {
     @CommandBody
     val reload = mainCommand {
         execute<CommandSender> { sender, _, _ ->
-            ModuleKits.reloadModule()
+            TabooPublicWork.reloadModule(ModuleKits.id)
             sender.sendLang("module-kits-reload")
         }
     }

@@ -2,3 +2,21 @@ setting:
   # 是否启用模块
   enable: false
   language: "zh_CN"
+spawner:
+  # 是否允许玩家手持刷怪蛋设置刷怪笼内容
+  # 这会读取刷怪蛋的NBT 用于设置一些额外属性
+  # 如果物品不是刷怪蛋 但是NBT里包含 SpawnData.spawnedType 也会被认为是刷怪蛋
+  # NBT:
+  # SpawnData:
+  #  delay: Integer (设置刷怪笼刷怪延迟.)
+  #  maxNearbyEntities: Integer (设置刷怪范围内允许出现的相似实体的最大数量.)
+  #  maxSpawnDelay: Tick (设置刷怪笼刷怪的最大延迟.)
+  #  minSpawnDelay: Tick (设置刷怪笼刷怪的最小延迟.)
+  #  requiredPlayerRange: Integer (设置玩家使刷怪笼激活所需的最远距离.)
+  #  spawnCount: Integer (设置刷怪笼每次刷怪的数量.)
+  #  spawnedType: String (设置刷怪笼刷出的实体类型.) https://bukkit.windit.net/javadoc/org/bukkit/entity/EntityType.html
+  #  spawnRange: Integer (设置刷怪笼刷怪的范围.)
+  allow-set-spawner: false
+  # 自定义刷怪笼生成的实体 是否使用更聪明的AI
+  custom-spawner-smart-ai: false
+
