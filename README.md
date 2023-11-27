@@ -206,3 +206,41 @@ compileOnly(project(":project:util-item-lib"))
 例如:
 
 > [SxItem] 测试物品:参数1:参数2 1-2
+
+
+#### ItemTagReader 物品NBT读写工具
+
+此工具包含在core模块下 无需额外引用
+
+
+基本用法: 
+```kotlin
+// 假装你有一个物品
+val itemStack = ItemStack()
+
+// 可以使用了
+itemStack.itemTagReader {
+    
+}
+
+```
+
+然后你就可以像操作 Config 一样 操作物品的NBT
+
+要注意的是 Set后 只是修改了这个ItemTag 并没有同步回物品
+```kotlin
+itemStack.itemTagReader {
+    set("test", "test")
+}
+```
+> 不过值得一提的是 虽然不会同步回物品 但是你如果在set后面继续 get的话 是可以get到set过的内容
+
+
+如果想设置回物品你可以使用 这会设置回物品
+
+但是如果后续reader里进行修改 还是不会同步回去
+```kotlin
+itemStack.itemTagReader {
+    write(itemStack) // saveToItem(itemStack)
+}
+```

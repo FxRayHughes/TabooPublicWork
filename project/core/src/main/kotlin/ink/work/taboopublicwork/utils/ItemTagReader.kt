@@ -93,6 +93,14 @@ data class ItemTagReader(
         itemTag.saveTo(itemStack)
     }
 
+    fun saveToItem(itemStack: ItemStack) {
+        itemTag.saveTo(itemStack)
+    }
+
+    fun putAll(map: Map<String, Any?>) {
+        itemTag.putAll(map.mapNotNull { it.key to ItemTagData.toNBT(it.value) })
+    }
+
     fun set(key: String, value: Any?) {
         if (value == null) {
             itemTag.removeDeep(key)
