@@ -101,7 +101,7 @@ data class ItemTagReader(
         itemTag.putAll(map.mapNotNull { it.key to ItemTagData.toNBT(it.value) })
     }
 
-    fun set(key: String, value: Any?) {
+    operator fun set(key: String, value: Any?) {
         if (value == null) {
             itemTag.removeDeep(key)
         } else {
