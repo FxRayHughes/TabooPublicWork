@@ -8,6 +8,7 @@ import taboolib.common.io.newFolder
 import taboolib.common.platform.function.adaptCommandSender
 import taboolib.common.platform.function.getDataFolder
 import taboolib.common.platform.function.releaseResourceFile
+import taboolib.common.platform.function.unregisterCommand
 import taboolib.common.util.replaceWithOrder
 import taboolib.module.chat.component
 import taboolib.module.configuration.Configuration
@@ -119,6 +120,10 @@ interface IModule {
             // 释放语言文件
             mergeLanguageFile()
             action.invoke(this)
+        } else {
+            TabooPublicWork.modulesCommand[id]?.forEach {
+                unregisterCommand(it.command)
+            }
         }
         // 注册到全局
         TabooPublicWork.modules[id] = this
@@ -179,10 +184,7 @@ interface IModule {
      *  发送语言
      */
     fun sendLangW(player: CommandSender, key: String, vararg args: Any) {
-        val message = runCatching { langFile.getString(key, key)!! }.getOrNull() ?: return run {
-            mergeLanguageFile()
-            sendLangW(player, key, *args)
-        }
+        val message = langFile.getString(key, key)!!
         if (message.isEmpty()) {
             return
         }

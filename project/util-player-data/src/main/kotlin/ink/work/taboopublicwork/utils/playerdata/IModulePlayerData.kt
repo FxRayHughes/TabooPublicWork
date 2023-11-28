@@ -11,6 +11,18 @@ interface IModulePlayerData {
 
     var module: IModule
 
+    fun getList(player: OfflinePlayer, key: String): List<String> {
+        return PlayerDatabase.database.keys(player).filter {
+            it.startsWith("${module.id}-$key")
+        }.toList()
+    }
+
+    fun getList(player: OfflinePlayer): List<String> {
+        return PlayerDatabase.database.keys(player).filter {
+            it.startsWith("${module.id}-")
+        }.toList()
+    }
+
     fun get(player: OfflinePlayer, key: String): String? {
         return PlayerDatabase.database.get(player, "${module.id}-$key".replace(".", "-"))
     }

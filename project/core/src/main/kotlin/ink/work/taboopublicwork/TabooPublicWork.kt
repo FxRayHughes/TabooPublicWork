@@ -1,5 +1,6 @@
 package ink.work.taboopublicwork
 
+import ink.work.taboopublicwork.api.ICommand
 import ink.work.taboopublicwork.api.IModule
 import taboolib.module.configuration.Config
 import taboolib.module.configuration.Configuration
@@ -20,12 +21,18 @@ object TabooPublicWork {
         BukkitPlugin.getInstance()
     }
 
+    // 模块列表
     val modules = ConcurrentHashMap<String, IModule>()
 
+    // 模块重启回调 与 初始化回调
     val modulesReloadAction = ConcurrentHashMap<String, IModule.() -> Unit>()
     val modulesInitAction = ConcurrentHashMap<String, IModule.() -> Unit>()
 
+    // 模块开启情况
     val modulesEnable = ConcurrentHashMap<String, Boolean>()
+
+    // 模块注册的命令
+    val modulesCommand = ConcurrentHashMap<String, ArrayList<ICommand>>()
 
     fun reload() {
         modulesReloadAction.forEach { (t, u) ->

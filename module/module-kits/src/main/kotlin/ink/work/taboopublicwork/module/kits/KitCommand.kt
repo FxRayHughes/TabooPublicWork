@@ -1,9 +1,12 @@
 package ink.work.taboopublicwork.module.kits
 
 import ink.work.taboopublicwork.TabooPublicWork
+import ink.work.taboopublicwork.api.ICommand
 import ink.work.taboopublicwork.module.kits.ModuleKits.sendLang
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
 import taboolib.common.platform.command.CommandBody
 import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.mainCommand
@@ -12,8 +15,14 @@ import taboolib.expansion.createHelper
 import taboolib.module.lang.sendLang
 
 @CommandHeader(name = "kits", aliases = ["kit"], permission = "taboopublicwork.command.kits")
-object KitCommand {
+object KitCommand :ICommand {
 
+    override val command: String = "kits"
+
+    @Awake(LifeCycle.LOAD)
+    fun init() {
+        register(ModuleKits)
+    }
 
     @CommandBody
     val main = mainCommand {

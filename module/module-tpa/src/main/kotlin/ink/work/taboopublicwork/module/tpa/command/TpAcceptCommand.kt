@@ -1,5 +1,6 @@
 package ink.work.taboopublicwork.module.tpa.command
 
+import ink.work.taboopublicwork.api.ICommand
 import ink.work.taboopublicwork.module.tpa.ModuleTpa
 import ink.work.taboopublicwork.module.tpa.ModuleTpa.sendLang
 import ink.work.taboopublicwork.module.tpa.TpaPlayerData.askTimeout
@@ -8,6 +9,8 @@ import ink.work.taboopublicwork.module.tpa.TpaPlayerData.isTimeout
 import ink.work.taboopublicwork.utils.evalKether
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
 import taboolib.common.platform.command.CommandBody
 import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.mainCommand
@@ -15,7 +18,14 @@ import taboolib.common.platform.function.submitAsync
 
 
 @CommandHeader("tpaccept", aliases = ["tpyes"], description = "传送", permission = "taboopublicwork.command.tpa")
-object TpAcceptCommand {
+object TpAcceptCommand : ICommand {
+
+    override val command: String = "tpaccept"
+
+    @Awake(LifeCycle.LOAD)
+    fun init() {
+        register(ModuleTpa)
+    }
 
     @CommandBody
     val main = mainCommand {
@@ -66,4 +76,5 @@ object TpAcceptCommand {
         askTimeout[sentPlayer]!!.timeout.remove(this.name)
         getAsked[this]!!.remove(player)
     }
+
 }

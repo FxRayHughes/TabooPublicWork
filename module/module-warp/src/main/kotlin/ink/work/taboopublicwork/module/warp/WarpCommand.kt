@@ -1,10 +1,13 @@
 package ink.work.taboopublicwork.module.warp
 
 import ink.work.taboopublicwork.TabooPublicWork
+import ink.work.taboopublicwork.api.ICommand
 import ink.work.taboopublicwork.module.warp.ModuleWarp.sendLang
 import ink.work.taboopublicwork.module.warp.data.WarpData
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import taboolib.common.LifeCycle
+import taboolib.common.platform.Awake
 import taboolib.common.platform.command.CommandBody
 import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.mainCommand
@@ -12,7 +15,14 @@ import taboolib.common.platform.command.subCommand
 import taboolib.expansion.createHelper
 
 @CommandHeader("warp", description = "地标", permission = "taboopublicwork.command.warp")
-object WarpCommand {
+object WarpCommand : ICommand {
+
+    override val command = "warp"
+
+    @Awake(LifeCycle.LOAD)
+    fun init() {
+        register(ModuleWarp)
+    }
 
     @CommandBody
     val main = mainCommand {
