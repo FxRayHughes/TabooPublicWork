@@ -7,6 +7,7 @@ import ink.work.taboopublicwork.module.tpa.TpaPlayerData.askTimeout
 import ink.work.taboopublicwork.module.tpa.TpaPlayerData.getAsked
 import ink.work.taboopublicwork.module.tpa.TpaPlayerData.isTimeout
 import ink.work.taboopublicwork.utils.evalKether
+import ink.work.taboopublicwork.utils.tpDelay
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import taboolib.common.LifeCycle
@@ -64,14 +65,21 @@ object TpAcceptCommand : ICommand {
         this.sendLang("module-tpa-accept-target", player)
         sentPlayer.sendLang("module-tpa-accept-player", this.name)
         val location = this.location
+        val delay = ModuleTpa.config.getLong("tpa-delay", 0)
 
-        submitAsync(delay = ModuleTpa.config.getLong("tpa-delay", 0)) {
-            sentPlayer.teleport(location)
-        }
+//        submitAsync(delay = ModuleTpa.config.getLong("tpa-delay", 0)) {
+//            sentPlayer.teleport(location)
+//        }
+        sentPlayer.tpDelay(delay, location, start = {
+            ModuleTpa.config.getString("actions.accept.self", "")!!.evalKether(this, mapOf("target" to sentPlayer.name)).thenRun {
+                ModuleTpa.config.getString("actions.accept.sent", "")!!.evalKether(sentPlayer, mapOf("target" to this.name))
+            }
+        }, error = {
+            ModuleTpa.config.getString("actions.cancel.self", "")!!.evalKether(this, mapOf("target" to sentPlayer.name)).thenRun {
+                ModuleTpa.config.getString("actions.cancel.sent", "")!!.evalKether(sentPlayer, mapOf("target" to this.name))
+            }
+        })
 
-        ModuleTpa.config.getString("actions.accept.self", "")!!.evalKether(this).thenRun {
-            ModuleTpa.config.getString("actions.accept.sent", "")!!.evalKether(sentPlayer)
-        }
 
         askTimeout[sentPlayer]!!.timeout.remove(this.name)
         getAsked[this]!!.remove(player)

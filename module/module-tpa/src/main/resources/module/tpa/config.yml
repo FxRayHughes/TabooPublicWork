@@ -11,13 +11,21 @@ tpa-delay: 10
 
 # 执行Kether
 actions:
+  # 接受传送时
   accept:
+    # 接受者
     self: |-
-      tell "1"
+      tell inline "{{ &target }} 将在 0.5 秒后传送"
+    # 传送者
     sent: |-
-      tell "2"
+      tell inline "将在 0.5 秒后传送至 {{ &target }} "
   deny:
     self: |-
       tell "3"
     sent: |-
       tell "4"
+  cancel:
+    self: |-
+      tell "1"
+    sent: |-
+      tell "2"
