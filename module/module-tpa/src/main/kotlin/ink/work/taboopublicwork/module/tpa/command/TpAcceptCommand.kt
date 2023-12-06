@@ -15,7 +15,6 @@ import taboolib.common.platform.Awake
 import taboolib.common.platform.command.CommandBody
 import taboolib.common.platform.command.CommandHeader
 import taboolib.common.platform.command.mainCommand
-import taboolib.common.platform.function.submitAsync
 
 
 @CommandHeader("tpaccept", aliases = ["tpyes"], description = "传送", permission = "taboopublicwork.command.tpa")
