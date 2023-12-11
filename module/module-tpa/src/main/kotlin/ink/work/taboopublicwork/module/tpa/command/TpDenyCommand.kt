@@ -61,8 +61,8 @@ object TpDenyCommand : ICommand {
         this.sendLang("module-tpa-deny-target", player)
         sentPlayer.sendLang("module-tpa-deny-player", this.name)
 
-        ModuleTpa.config.getString("actions.deny.self", "")!!.evalKether(this).thenRun {
-            ModuleTpa.config.getString("actions.deny.sent", "")!!.evalKether(sentPlayer)
+        ModuleTpa.config.getString("actions.deny.self", "")!!.evalKether(this, mapOf("target" to sentPlayer.name)).thenRun {
+            ModuleTpa.config.getString("actions.deny.sent", "")!!.evalKether(sentPlayer, mapOf("target" to this.name))
         }
 
         TpaPlayerData.askTimeout[sentPlayer]!!.timeout.remove(this.name)
